@@ -590,13 +590,27 @@ export default function NFTCalculator() {
     <>
       <link href="https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:wght@300;400;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet"/>
       <style>{`
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body, #root { width: 100%; height: 100%; margin: 0; padding: 0; background: #0c1409; overflow-x: hidden; }
+        body { min-height: 100vh; }
+        #root { display: flex; flex-direction: column; min-height: 100vh; }
         input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#7abc5a;border:2px solid #0c1409;box-shadow:0 0 6px #5a8f3c88;cursor:pointer}
         input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#7abc5a;border:2px solid #0c1409;cursor:pointer}
         *::-webkit-scrollbar{width:5px} *::-webkit-scrollbar-track{background:#0c1409} *::-webkit-scrollbar-thumb{background:#2a3a22;border-radius:3px}
+        @media(max-width:820px){
+          .nft-body{flex-direction:column!important}
+          .nft-panel{width:100%!important;min-width:0!important;max-height:none!important;border-right:none!important;border-bottom:1px solid #1e2e16}
+          .nft-canvas{min-width:0!important;min-height:420px}
+        }
+        @media(max-width:520px){
+          .nft-header{padding:10px 12px 6px!important}
+          .nft-panel{padding:10px 12px!important}
+          .nft-canvas{padding:6px!important}
+        }
       `}</style>
-      <div style={{ minHeight: "100vh", background: "#0c1409", color: "#c8ddb8", fontFamily: "'Atkinson Hyperlegible',sans-serif", display: "flex", flexDirection: "column" }}>
+      <div style={{ minHeight: "100vh", width: "100%", background: "#0c1409", color: "#c8ddb8", fontFamily: "'Atkinson Hyperlegible',sans-serif", display: "flex", flexDirection: "column" }}>
         {/* HEADER */}
-        <div style={{ padding: "12px 20px 8px", borderBottom: "1px solid #1e2e16", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+        <div className="nft-header" style={{ padding: "12px 20px 8px", borderBottom: "1px solid #1e2e16", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8, width: "100%" }}>
           <div>
             <div style={{ fontSize: 17, fontFamily: "'Averia Sans Libre',sans-serif", color: "#b8daa0", letterSpacing: 1 }}>NFT System Calculator</div>
             <div style={{ fontSize: 8, color: "#4a5c3e", letterSpacing: 2, fontFamily: "'Atkinson Hyperlegible',sans-serif" }}>NUTRIENT FILM TECHNIQUE — PIPE, FLOW &amp; MATERIALS</div>
@@ -617,9 +631,9 @@ export default function NFTCalculator() {
         </div>
 
         {/* BODY */}
-        <div style={{ display: "flex", flex: 1, overflow: "hidden", flexWrap: "wrap" }}>
+        <div className="nft-body" style={{ display: "flex", flex: 1, overflow: "hidden", flexWrap: "wrap", width: "100%" }}>
           {/* LEFT PANEL */}
-          <div style={{ width: 280, minWidth: 240, padding: "12px 16px", borderRight: "1px solid #1e2e16", overflowY: "auto", maxHeight: "calc(100vh - 50px)" }}>
+          <div className="nft-panel" style={{ width: 280, minWidth: 240, padding: "12px 16px", borderRight: "1px solid #1e2e16", overflowY: "auto", maxHeight: "calc(100vh - 50px)" }}>
             {sH("STRUCTURE")}
             <Slider label="Channel Length" unit="m" value={cfg.channelLength} min={1} max={12} step={0.5} onChange={set("channelLength")}/>
             <Slider label="Shelf Width" unit="mm" value={cfg.shelfWidth} min={300} max={1200} step={50} onChange={set("shelfWidth")} accent="#6b8a56"/>
@@ -680,7 +694,7 @@ export default function NFTCalculator() {
           </div>
 
           {/* RIGHT: VIEWS */}
-          <div style={{ flex: 1, minWidth: 380, display: "flex", flexDirection: "column", padding: activeView === "bom" ? 0 : 10, gap: 8, overflow: "hidden" }}>
+          <div className="nft-canvas" style={{ flex: 1, minWidth: 380, display: "flex", flexDirection: "column", padding: activeView === "bom" ? 0 : 10, gap: 8, overflow: "hidden" }}>
             <div ref={elevRef} style={{ flex: 1, border: activeView === "elevation" ? "1px solid #1e2e16" : "none", borderRadius: 6, overflow: "hidden", background: "#0a1208", minHeight: 340, display: activeView === "elevation" ? "block" : "none" }}>
               <ElevationView cfg={cfg} sys={sys}/>
             </div>
